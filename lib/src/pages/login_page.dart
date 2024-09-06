@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_sw1/src/pages/principal.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -11,114 +12,139 @@ class LoginPage extends StatelessWidget {
         backgroundColor: const Color(0xFF15172B),
         elevation: 0,
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-
-          _title(),
-          _imagenSp(),
-          const SizedBox(height: 50), // Espacio entre imagen y campos de texto
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
         
-          const SizedBox(height: 8), // Espacio entre el texto y el campo de texto
-          
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0), // Margen a los costados
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Alineación del contenido en la parte izquierda
-              children: [
-                const Text(
-                  "Email or Username",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                
-                const SizedBox(height: 10), // Espacio entre el texto y el campo de texto
-                
-                TextField(
-                  decoration: _border().copyWith(
-                    labelText: "Email or User",
-                    prefixIcon: const Icon(Icons.email),
-                    labelStyle: const TextStyle(
-                      color: Color.fromARGB(255, 122, 117, 117),
+            _title(),
+            _imagenSp(),
+            const SizedBox(height: 50), // Espacio entre imagen y campos de texto
+            
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20.0), // Margen a los costados
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start, // Alineación del contenido en la parte izquierda
+                children: [
+                  const Text(
+                    "Email or Username",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
                     ),
-                  ),
-                ),
-
-                const SizedBox(height: 20), // Espacio entre los campos de texto
-                
-                const Text(
-                  "Password",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                
-                const SizedBox(height: 10), // Espacio entre el texto y el campo de texto
-
-                TextField(
-                  decoration: _border().copyWith(
-                    labelText: "Password",
-                    prefixIcon: const Icon(Icons.lock),
-                    labelStyle: const TextStyle(
-                      color: Color.fromARGB(255, 122, 117, 117),
-                    ),
-
                   ),
                   
-                  //obscureText: true,
-                ),
-
-                const SizedBox(height: 60),
-
-                TextField(
-                  decoration: _loginBorder().copyWith(
-                    labelText: "Log in",
-                    labelStyle: const TextStyle(
-                      color: Colors.white, // Color de la etiqueta
+                  const SizedBox(height: 10), // Espacio entre el texto y el campo de texto
+                  
+                  TextField(
+                    decoration: _border().copyWith(
+                      labelText: "Email or User",
+                      prefixIcon: const Icon(Icons.email),
+                      labelStyle: const TextStyle(
+                        color: Color.fromARGB(255, 122, 117, 117),
+                      ),
+                    ),
+                  ),
+        
+                  const SizedBox(height: 20), // Espacio entre los campos de texto
+                  
+                  const Text(
+                    "Password",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      fontSize: 23,
-                    ), // Alinea la etiqueta con el hint text
+                    ),
                   ),
-                  textAlign: TextAlign.center, // Centra el texto dentro del TextField
-                ),
-              ],
+                  
+                  const SizedBox(height: 10), // Espacio entre el texto y el campo de texto
+        
+                  TextField(
+                    decoration: _border().copyWith(
+                      labelText: "Password",
+                      prefixIcon: const Icon(Icons.lock),
+                      labelStyle: const TextStyle(
+                        color: Color.fromARGB(255, 122, 117, 117),
+                      ),
+        
+                    ),
+                    
+                    //obscureText: true,
+                  ),
+        
+                  const SizedBox(height: 60),
+        
+                  Center(
+                    child: SizedBox(
+                      width: 300, // Ancho del botón
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey[850], // Color de fondo del botón
+                          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15), // Bordes redondeados
+                            side: const BorderSide(
+                              color: Colors.green, // Color del borde
+                              width: 2, // Grosor del borde
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          // Navegar a otra vista
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                            return const Principal();
+                          }));
+                        },
+
+                        child: const Text(
+                          "Log in",
+                          style: TextStyle(
+                            color: Colors.white, // Color del texto
+                            fontWeight: FontWeight.w700,
+                            fontSize: 23, // Tamaño de la fuente
+                          ),
+                          textAlign: TextAlign.center, // Centra el texto en el botón
+                        ),
+                      ),
+                    ),
+                  )
+
+                ],
+              ),
             ),
-          ),
-          const Spacer(),
+            //const Spacer(),
 
-          const Align(
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Already have an account? ",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
+            const SizedBox(height: 250),
+
+            const Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Already have an account? ",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-                Text(
-                  "Sing in",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 15,
+                  Text(
+                    "Sing in",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-
-          const SizedBox(height: 40),
-
-        ],
+        
+            const SizedBox(height: 40),
+        
+          ],
+        ),
       ),
     );
   }

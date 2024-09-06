@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_sw1/src/pages/aa.dart';
 import 'package:proyecto_sw1/src/pages/login_page.dart';
+import 'package:proyecto_sw1/src/pages/principal.dart';
 import 'package:proyecto_sw1/src/pages/splash.dart';
 import 'package:proyecto_sw1/src/pages/vista_inicial.dart';
 
@@ -20,12 +21,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
         useMaterial3: true,
       ),
-      initialRoute: 'splash',
+      initialRoute: 'principal',
       routes: {
         'vista-inicial': (BuildContext context) => const VistaInicial(),
         'splash': (BuildContext context) => const Splash(),
         'aa': (BuildContext context) => const Aa(),
         'login': (BuildContext context) => const LoginPage(),
+        'principal': (BuildContext context) => const Principal(),
       },
     );
   }
