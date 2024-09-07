@@ -15,9 +15,8 @@ class LoginPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            
+            const SizedBox(height: 20),
         
             _title(),
             _imagenSp(),
@@ -95,7 +94,7 @@ class LoginPage extends StatelessWidget {
                         onPressed: () {
                           // Navegar a otra vista
                           Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                            return const Principal();
+                            return Principal();
                           }));
                         },
 
