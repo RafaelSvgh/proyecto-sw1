@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:proyecto_sw1/src/pages/vista_inicial.dart';
+import 'package:proyecto_sw1/src/pages/initial_page.dart';
 import 'package:proyecto_sw1/src/widgets/texto_gradiente.dart';
 
 class Splash extends StatelessWidget {
@@ -28,7 +28,7 @@ class Splash extends StatelessWidget {
         ],
       ),
       duration: 2030,
-      nextScreen: const VistaInicial(),
+      nextScreen: const InitialPage(),
       splashIconSize: 250,
       backgroundColor: const Color(0x0015172b),
       splashTransition: SplashTransition.fadeTransition,

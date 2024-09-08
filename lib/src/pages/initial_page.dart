@@ -1,14 +1,49 @@
-import 'package:flutter/material.dart';
-import 'package:proyecto_sw1/src/pages/login_page.dart';
-import 'package:proyecto_sw1/src/widgets/texto_gradiente.dart';
+import 'dart:async';
 
-class VistaInicial extends StatelessWidget {
-  const VistaInicial({super.key});
+import 'package:flutter/material.dart';
+import 'package:proyecto_sw1/src/services/auth/auth_spotify.dart';
+import 'package:proyecto_sw1/src/services/auth/get_access_token.dart';
+import 'package:proyecto_sw1/src/widgets/texto_gradiente.dart';
+import 'package:uni_links/uni_links.dart';
+
+class InitialPage extends StatefulWidget {
+  const InitialPage({super.key});
+
+  @override
+  State<InitialPage> createState() => _InitialPageState();
+}
+
+class _InitialPageState extends State<InitialPage> {
+  StreamSubscription? _sub;
+
+  @override
+  void initState() {
+    super.initState();
+    _listenToRedirects();
+  }
+
+  void _listenToRedirects() {
+    // ignore: deprecated_member_use
+    _sub = getUriLinksStream().listen((Uri? uri) {
+      if (uri != null && uri.toString().startsWith('myapp://callback')) {
+        final String? code = uri.queryParameters['code'];
+        if (code != null) {
+          getAccessToken(code, context);
+        }
+      }
+    }, onError: (err) {});
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0x0015172b),
+      backgroundColor: Color.fromARGB(0, 21, 23, 43),
       body: _inicio(context),
     );
   }
@@ -38,10 +73,10 @@ class VistaInicial extends StatelessWidget {
   TextButton _botonInicioSesion(BuildContext context) {
     return TextButton(
         onPressed: () {
-          
-          Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-            return const LoginPage();
-          }));
+          authenticateWithSpotify();
+          // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          //   return const LoginPage();
+          // }));
         },
         child: const Text(
           'Iniciar Sesión',

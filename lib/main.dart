@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_sw1/src/pages/aa.dart';
-import 'package:proyecto_sw1/src/pages/login_page.dart';
-import 'package:proyecto_sw1/src/pages/splash.dart';
-import 'package:proyecto_sw1/src/pages/vista_inicial.dart';
+import 'package:proyecto_sw1/src/pages/perfil_page.dart';
+import 'package:proyecto_sw1/src/pages/splash_page.dart';
+import 'package:proyecto_sw1/src/pages/initial_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,10 +23,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'splash',
       routes: {
-        'vista-inicial': (BuildContext context) => const VistaInicial(),
+        'vista-inicial': (BuildContext context) => const InitialPage(),
         'splash': (BuildContext context) => const Splash(),
-        'aa': (BuildContext context) => const Aa(),
-        'login': (BuildContext context) => const LoginPage(),
+        'login': (BuildContext context) => const SpotifyAuthScreen(),
+        'perfil': (BuildContext context) => const PerfilPage(),
       },
     );
   }
