@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  card_swiper: ^3.0.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -73,6 +74,10 @@ flutter:
     - assets/images/img-2.png
     - assets/images/load-1.json
     - assets/images/load-3.json
+    - assets/images/plan1.jpg
+    - assets/images/plan2.jpg
+    - assets/images/plan3.jpg
+    - assets/images/plan4.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
