@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:proyecto_sw1/src/pages/dashboard_page.dart';
-import 'package:proyecto_sw1/src/pages/login_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:proyecto_sw1/src/pages/perfil_page.dart';
+import 'package:proyecto_sw1/src/pages/principal_page.dart';
 
 Future<void> getAccessToken(String code, BuildContext context) async {
   const String clientId = '1d29336f6a00486e9c0d5ac46ba67c78';
@@ -34,7 +32,7 @@ Future<void> getAccessToken(String code, BuildContext context) async {
     Navigator.pushReplacement(
       // ignore: use_build_context_synchronously
       context,
-      MaterialPageRoute(builder: (context) => const DashboardPage()),
+      MaterialPageRoute(builder: (context) =>  const PrincipalPage()),
     );
   } else {
     throw 'Failed to get access token: ${response.body}';

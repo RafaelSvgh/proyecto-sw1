@@ -43,7 +43,7 @@ class _InitialPageState extends State<InitialPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(0, 21, 23, 43),
+      backgroundColor: const Color.fromARGB(0, 21, 23, 43),
       body: _inicio(context),
     );
   }
@@ -74,9 +74,6 @@ class _InitialPageState extends State<InitialPage> {
     return TextButton(
         onPressed: () {
           authenticateWithSpotify();
-          // Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-          //   return const LoginPage();
-          // }));
         },
         child: const Text(
           'Iniciar Sesión',

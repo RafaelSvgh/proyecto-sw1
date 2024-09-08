@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto_sw1/src/pages/principal.dart';
+import 'package:proyecto_sw1/src/pages/principal_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           // Navegar a otra vista
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (_) {
-                            return Principal();
+                            return PrincipalPage();
                           }));
                         },
                         child: const Text(
@@ -205,31 +205,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  InputDecoration _loginBorder() {
-    return InputDecoration(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15), // Borde redondeado
-        borderSide: const BorderSide(
-          color: Colors.green, // Borde transparente
-          width: 3,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(
-          color: Colors.green, // Borde transparente cuando está enfocado
-          width: 3,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(
-          color: Colors.green, // Borde transparente cuando está habilitado
-          width: 3,
-        ),
-      ),
-      filled: true, //fondo de relleno
-      fillColor: const Color(0xFF1F222A),
-    );
-  }
 }

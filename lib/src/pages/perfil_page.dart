@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_sw1/src/models/user.dart';
-import 'package:proyecto_sw1/src/pages/dashboard_page.dart';
+import 'package:proyecto_sw1/src/pages/principal_page.dart';
 import 'package:proyecto_sw1/src/services/providers/user_provider.dart';
 
 class PerfilPage extends ConsumerStatefulWidget {
@@ -69,7 +69,7 @@ class PerfilPageState extends ConsumerState<PerfilPage> {
     return TextButton(
       onPressed: () {
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const DashboardPage()));
+            MaterialPageRoute(builder: (context) => const PrincipalPage()));
       },
       style: ButtonStyle(
         padding: WidgetStateProperty.all(
