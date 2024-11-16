@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:proyecto_sw1/src/models/user.dart';
+import 'package:proyecto_sw1/src/pages/login_page.dart';
 import 'package:proyecto_sw1/src/pages/principal_page.dart';
+import 'package:proyecto_sw1/src/pages/splash_page.dart';
 import 'package:proyecto_sw1/src/services/providers/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PerfilPage extends ConsumerStatefulWidget {
   const PerfilPage({super.key});
@@ -45,7 +48,15 @@ class PerfilPageState extends ConsumerState<PerfilPage> {
 
   TextButton _botonSalir() {
     return TextButton(
-      onPressed: () {},
+      onPressed: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.remove('token');
+        prefs.remove('name');
+        prefs.remove('email');
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const Splash(),
+        ));
+      },
       style: ButtonStyle(
         padding: WidgetStateProperty.all(
           const EdgeInsets.symmetric(vertical: 0.0, horizontal: 25.0),
@@ -110,10 +121,10 @@ class PerfilPageState extends ConsumerState<PerfilPage> {
   Column _nombreCorreo(User user) {
     return Column(
       children: [
-        Text(
-          user.displayName == null ? 'no name' : user.displayName.toString(),
-          style: const TextStyle(color: Colors.white, fontSize: 18),
-        ),
+        // Text(
+        //   user.displayName == null ? 'no name' : user.displayName.toString(),
+        //   style: const TextStyle(color: Colors.white, fontSize: 18),
+        // ),
         Text(user.email == null ? 'no name' : user.email.toString(),
             style: const TextStyle(color: Colors.white, fontSize: 14))
       ],
@@ -132,20 +143,21 @@ class PerfilPageState extends ConsumerState<PerfilPage> {
         ),
       ),
       child: CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: 45,
-          child: ClipOval(
-              child: (user.images != null && user.images!.isNotEmpty)
-                  ? Image.network(
-                      user.images![0].url,
-                      fit: BoxFit.cover,
-                      height: 90,
-                      width: 90,
-                    )
-                  : const Icon(
-                      Icons.person,
-                      size: 60,
-                    ))),
+          // backgroundColor: Colors.white,
+          // radius: 45,
+          // child: ClipOval(
+          //     child: (user.images != null && user.images!.isNotEmpty)
+          //         ? Image.network(
+          //             user.images![0].url,
+          //             fit: BoxFit.cover,
+          //             height: 90,
+          //             width: 90,
+          //           )
+          //         : const Icon(
+          //             Icons.person,
+          //             size: 60,
+          //           ))
+          ),
     );
   }
 }

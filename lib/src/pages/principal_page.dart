@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:proyecto_sw1/src/models/user.dart';
 import 'package:proyecto_sw1/src/pages/backGrounds/plan1.dart';
 import 'package:proyecto_sw1/src/pages/backGrounds/plan2.dart';
 import 'package:proyecto_sw1/src/pages/backGrounds/plan3.dart';
 import 'package:proyecto_sw1/src/pages/backGrounds/plan4.dart';
 import 'package:proyecto_sw1/src/pages/perfil_page.dart';
-import 'package:proyecto_sw1/src/services/user/user_profile.dart';
+import 'package:proyecto_sw1/src/services/providers/user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrincipalPage extends ConsumerStatefulWidget {
   const PrincipalPage({super.key});
@@ -18,9 +20,18 @@ class PrincipalPage extends ConsumerStatefulWidget {
 class PrincipalPageState extends ConsumerState<PrincipalPage> {
   @override
   void initState() {
+    actualizarUser();
     super.initState();
-    getUserProfile(ref);
   }
+
+  Future<void> actualizarUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? name = prefs.getString('name');
+    String? email = prefs.getString('email');
+    User user = User(email: email, name: name);
+    ref.read(userProvider.notifier).update((state) => user);
+  }
+
   @override
   Widget build(BuildContext context) {
     final List<String> imagePaths = [
@@ -29,6 +40,7 @@ class PrincipalPageState extends ConsumerState<PrincipalPage> {
       'assets/images/plan3.jpg', // Imagen 3
       'assets/images/plan4.jpg', // Imagen 4
     ];
+    final usuario = ref.watch(userProvider);
     return Scaffold(
       backgroundColor: const Color(0xFF15172B),
       appBar: AppBar(
@@ -76,9 +88,9 @@ class PrincipalPageState extends ConsumerState<PrincipalPage> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 3), // Espaciado interno
 
-                        child: const Text(
-                          'HISTORIAL',
-                          style: TextStyle(
+                        child: Text(
+                          usuario.email ?? '...',
+                          style: const TextStyle(
                             color: Colors.white, // Color del texto
                             fontSize: 12, // Tamaño de la fuente
                             fontWeight: FontWeight.bold, // Negrita
@@ -113,7 +125,7 @@ class PrincipalPageState extends ConsumerState<PrincipalPage> {
                 horizontal: 20, vertical: 8), // Reducir el padding horizontal
             alignment: Alignment
                 .centerLeft, // Alinea el texto a la izquierda dentro del Container
-            child: const Text(
+            child: Text(
               'ID Sala',
               style: TextStyle(
                 color: Colors.white, // Color del texto

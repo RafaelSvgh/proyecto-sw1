@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:proyecto_sw1/src/models/user.dart';
-import 'package:proyecto_sw1/src/pages/principal_page.dart';
-import 'package:proyecto_sw1/src/pages/register_page.dart';
+import 'package:proyecto_sw1/src/pages/login_page.dart';
 import 'package:proyecto_sw1/src/services/auth/auth_service.dart';
-import 'package:proyecto_sw1/src/services/providers/user_provider.dart';
 import 'package:proyecto_sw1/src/widgets/loginForm.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends ConsumerStatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends ConsumerStatefulWidget {
+  const RegisterPage({super.key});
 
   @override
   LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends ConsumerState<LoginPage> {
+class LoginPageState extends ConsumerState<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String name = '';
   String email = '';
   String password = '';
   bool _isLoading = false;
@@ -74,7 +72,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text(
-          '¿No tienes una cuenta? ',
+          'Ya tienes una cuenta? ',
           style: TextStyle(
             color: Color.fromARGB(255, 225, 225, 225),
             fontSize: 15,
@@ -83,12 +81,12 @@ class LoginPageState extends ConsumerState<LoginPage> {
         TextButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => const RegisterPage(),
+              builder: (context) => const LoginPage(),
             ));
           },
           child: const Text(
-            'Regístrate',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            'Inicia Sesión',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
           ),
         )
       ],
@@ -110,7 +108,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
             onPressed: () {
               final isValid = _formKey.currentState!.validate();
               if (!isValid) return;
-              _login();
+              _registro();
             },
             child: const Text(
               "Ingresar",
@@ -129,6 +127,10 @@ class LoginPageState extends ConsumerState<LoginPage> {
         key: _formKey,
         child: Column(
           children: [
+            _campoNombre(),
+            const SizedBox(
+              height: 25.0,
+            ),
             _campoCorreo(),
             const SizedBox(
               height: 25.0,
@@ -151,6 +153,25 @@ class LoginPageState extends ConsumerState<LoginPage> {
         }
         if (value.length < 6) {
           return 'Mínimo 6 caracteres';
+        }
+        return null;
+      },
+    );
+  }
+
+  LoginForm _campoNombre() {
+    return LoginForm(
+      label: 'Nombre',
+      hint: 'nombre',
+      icon: Icons.person,
+      password: false,
+      onChanged: (value) => name = value,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Ingrese un nombre';
+        }
+        if (value.length < 4) {
+          return 'Mínimo 4 caracteres';
         }
         return null;
       },
@@ -184,7 +205,7 @@ class LoginPageState extends ConsumerState<LoginPage> {
       padding: const EdgeInsets.only(bottom: 30),
       alignment: Alignment.bottomCenter,
       child: const Text(
-        "Login",
+        "Registro",
         style: TextStyle(
             color: Color.fromARGB(255, 225, 225, 225),
             fontSize: 29,
@@ -193,31 +214,22 @@ class LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  Future<void> _login() async {
+  Future<void> _registro() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
     try {
-      final response =
-          await _authService.login(email: email, password: password);
-      if (response.containsKey('token')) {
-        String token = response['token'];
-        String email = response['email'];
-        String name = response['name'];
-        _prefs!.setString('token', token);
-        _prefs!.setString('email', email);
-        _prefs!.setString('name', name);
-        User user = User.fromJson(response);
-        ref.read(userProvider.notifier).update((state) => user);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const PrincipalPage()),
-        );
-      }
+      await _authService.register(name: name, email: email, password: password);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Registro exitoso')));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginPage()),
+      );
     } catch (e) {
       setState(() {
-        _errorMessage = 'Error de autenticación. Verifica tus credenciales.';
+        _errorMessage = 'Error de registro.';
       });
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(_errorMessage!)));
